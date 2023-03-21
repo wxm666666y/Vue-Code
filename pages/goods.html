@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <table border="1" cellspacing="0">
+            <th>商品名称</th>
+            <th>单价</th>
+            <th>数量</th>
+            <th>金额</th>
+            <tr>
+                <td>{{shop[0].name}}</td>
+                <td>{{shop[0].price}}</td>
+                <td>{{shop[0].num}}</td>
+                <td>{{shop[0].price * shop[0].num | OneDecimal}}</td>
+            </tr>
+            <tr>
+                <td>{{shop[1].name}}</td>
+                <td>{{shop[1].price}}</td>
+                <td>{{shop[1].num}}</td>
+                <td>{{shop[1].price * shop[0].num | OneDecimal}}</td>
+            </tr>
+        </table>
+        <p>合计:{{totalprice | FormatPrice("$")}}</p>
+    </div>
+
+    <script type="text/javascript">
+        var vue = new Vue({
+            el:'#app',
+            data: {
+                shop:[
+                    {
+                        name: 'OPPO R15',
+                        price: '2999',
+                        num: '3',
+                    },
+                    {
+                        name: '华为p20',
+                        price: '3699',
+                        num: '2',
+                    }
+                ]
+            },
+            computed:{
+                totalprice:function (){
+                    var total = 0;
+                    this.shop.forEach(function (s){
+                        total += s.price * s.num;
+                    });
+                    return total;
+                }
+            },
+
+            filters:{
+                OneDecimal:function (v) {
+                    return v.toFixed(1);
+                },
+                FormatPrice:function (v,s){
+                    return s + v.toFixed(1);
+                }
+            }
+        })
+
+    </script>
+</body>
+</html>

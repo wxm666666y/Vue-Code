@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id = "app">
+        人民币: <input type="text" v-model="rmb"><br>
+        美元: <input type="text" v-model="dollar"><br>
+        {{rmb}}人民币={{dollar}}美元
+    </div>
+    <script type="text/javascript">
+        var vue = new Vue({
+            el:'#app',
+            data:{
+                rate : 6.8,
+                rmb: 0,
+                dollar : 0,
+            },
+
+            watch : {
+                rmb : function (val){
+                    this.dollar = val / this.rate;
+                },
+                dollar : function (val){
+                    this.rmb = val * this.rate;
+                }
+            }
+        })
+    </script>
+</body>
+</html>
