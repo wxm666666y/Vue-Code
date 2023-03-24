@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>shopping cart</title>
+</head>
+<script src="../js/vue.js"></script>
+<body>
+    <div id="app">
+        <table border="1" cellspacing="0">
+            <tr>
+                <th>名称</th>
+                <th>单价</th>
+                <th>数量</th>
+                <th>总计</th>
+            </tr>
+            <tr v-for="(item, index) in itemList">
+                <td>{{ item.name }}</td>
+                <td>{{ item.price }}</td>
+                <td>
+                    <button @click="decreaseGoods(index)">-</button>
+                    {{ item.quantity }}
+                    <button @click="addGoods(index)">+</button>
+                </td>
+                <td>
+                    {{ item.price * item.quantity }}
+                </td>
+            </tr>
+            <tr>
+                <td>合计金额：</td>
+                <td colspan="3">{{ totalPrice }}</td>
+            </tr>
+
+        </table>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                itemList: [
+                    { name: '小米8', price: 2699, quantity: 0 },
+                    { name: '华为p50', price: 3388, quantity: 0 },
+                ]
+            },
+            methods: {
+                addGoods(index) {
+                    this.itemList[index].quantity++;
+                },
+                decreaseGoods(index) {
+                    if (this.itemList[index].quantity > 0) {
+                        this.itemList[index].quantity--;
+                    }
+                }
+            },
+            computed: {
+                totalPrice() {
+                    let total = 0;
+                    this.itemList.forEach(function(item) {
+                        total += item.price * item.quantity;
+                    });
+                    return total;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
