@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>切换图片的显示和隐藏</title>
+    <script src = "../js/vue.js"></script>
+</head>
+<body>
+    <div id="box">
+        <button @click="toggle" >{{bText}}</button>
+<!--        <input type="button" @click="toggle" :value = "bText">-->
+        <div v-show="show">
+            <img src="../picture/pkq.jpg">
+        </div>
+    </div>
+
+    <script type = "text/javascript">
+        var vue = new Vue({
+            el:"#box",
+            data:{
+                bText:"隐藏图片",
+                show:true,
+            },
+            methods:{
+                toggle:function () {
+                    this.bText == '隐藏图片' ? this.bText = '显示图片' : this.bText = '隐藏图片';
+                    this.show = !this.show;
+                }
+            }
+        })
+    </script>
+</body>
+</html>

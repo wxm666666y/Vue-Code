@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>代办事项记录</title>
+</head>
+<script src="../js/vue.js"></script>
+<body>
+    <div id="app">
+        <h1>最近需完成的计划</h1>
+        <br>
+        <input type="text" v-model="plan">
+        <button @click="addPlan">添加</button>
+        <br>
+        未完成{{matter.length}}项<br>
+        <li v-for="(item,index) in matter">
+            {{index}}.{{item}}<button @click="deletePlan(index)">删除</button>
+        </li>
+        已完成{{finishMatter.length}}项<br>
+        <li v-for="(item,index) in finishMatter">
+            {{index}}.{{item}}
+        </li>
+    </div>
+</body>
+
+<script type="text/javascript">
+    var vue = new Vue({
+        el:"#app",
+        data:{
+            plan:"",
+            matter:[],
+            finishMatter:[],
+        },
+        methods:{
+            addPlan:function (p) {
+                this.matter.push(this.plan);
+                this.plan = "";
+            },
+            deletePlan:function (index) {
+                this.finishMatter.push( this.matter[index] );
+                this.matter.splice(index,1);
+            }
+        }
+    })
+</script>
+</html>
