@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户注册</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h2>用户注册</h2>
+        <form action="">
+            <table>
+                <tr>
+                    <td>用户名:</td>
+                    <td>
+                        <input v-model="username" type="text" placeholder="请输入用户名">
+                    </td>
+                </tr>
+                <tr>
+                    <td>个人简介</td>
+                    <td>
+                        <textarea v-model="profile" placeholder="请输入个人简介"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>性别:</td>
+                    <td>
+                        <input v-model="sex" type="radio" value="男">
+                        <label>男</label>
+                        <input v-model="sex" type="radio" value="女">
+                        <label>女</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="2">爱好:</td>
+                    <td>
+                        <input v-model="hobbies" type="checkbox" value="编程">
+                        <label>编程</label>
+                        <input v-model="hobbies" type="checkbox" value="阅读">
+                        <label>阅读</label>
+                        <input v-model="hobbies" type="checkbox" value="运动">
+                        <label>运动</label>
+                        <input v-model="hobbies" type="checkbox" value="音乐">
+                        <label>音乐</label>
+                        <input v-model="hobbies" type="checkbox" value="游戏">
+                        <label>游戏</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="button" value="全选" @click="allChecked">
+                        <input type="button" value="全不选" @click="noChecked">
+                        <input type="button" value="反选" @click="reverseChecked">
+                    </td>
+                </tr>
+                <tr>
+                    <td>所在地:</td>
+                    <td>
+                        <select v-model="position">
+                            <option value="">请选择</option>
+                            <option value="太原">太原</option>
+                            <option value="大同">大同</option>
+                            <option value="北京">北京</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>你所擅长的技术:</td>
+                    <td>
+                        <select v-model="skills" multiple="multiple">
+                            <option value="">请选择</option>
+                            <option value="Java">Java</option>
+                            <option value="C++">C++</option>
+                            <option value="Python">Python</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>感兴趣的职位:</td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td>可选职位</td>
+                                <td></td>
+                                <td>已选职位</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select v-model="job" multiple="multiple" size="5">
+                                        <option v-for="item in joblist " :value="item">{{item}}</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="button" value=">>" @click="toMyJob"><br>
+                                    <input type="button" value="<<" @click="toJob">
+                                </td>
+                                <td>
+                                    <select v-model="myjob" multiple="multiple" size="5">
+                                        <option v-for="item in myjoblist" :value="item">{{item}}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="submit" value="提交" @click.prevent="display">
+                        <input type="reset" value="重置">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <script>
+        var vue = new Vue({
+            el:'#app',
+            data:{
+                hobbyArray:['编程','阅读','运动','音乐','游戏'],
+                username:'',
+                profile:'',
+                sex:'',
+                hobbies:[],
+                tempArr:[],
+                skills:[],
+                position:[],
+                joblist:['Java工程师','前端工程师','数据分析师','全栈工程师','系统架构师'],
+                myjoblist:[],
+                job:[],
+                myjob:[],
+            },
+            methods:{
+                display:function (){
+
+                },
+                allChecked:function () {
+                    this.hobbies = this.hobbyArray;
+                },
+                noChecked:function () {
+                  this.hobbies = [];
+                },
+                reverseChecked:function (){
+                    this.tempArr = [];
+                    for( var i = 0; i < this.hobbyArray.length; i++ ){
+                        if( !this.hobbies.includes(this.hobbyArray[i]) ){
+                            this.tempArr.push(this.hobbyArray[i]);
+                        }
+                    }
+                    this.hobbies = this.tempArr;
+                },
+
+                toMyJob:function () {
+                    for( var i = 0; i < this.job.length; i++ ){
+                        this.myjoblist.push( this.job[i] );
+                        var index = this.joblist.indexOf(this.job[i]);
+                        this.joblist.splice(index, 1);
+                    }
+                    this.job = [];
+                },
+                toJob:function () {
+                    for( var i = 0; i < this.myjob.length; i++ ){
+                        this.joblist.push( this.myjob[i] );
+                        var index = this.myjoblist.indexOf(this.myjob[i]);
+                        this.myjoblist.splice(index, 1);
+                    }
+                    this.myjob = [];
+                }
+            }
+        })
+    </script>
+</body>
+</html>
