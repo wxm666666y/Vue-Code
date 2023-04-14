@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/vue.js"></script>
+    <script src="../js/vue-router.js"></script>
+</head>
+<body>
+    <div id="example">
+        <div class="box">
+            <ul>
+                    <router-link to="/music">音乐</router-link>
+                    <router-link to="/movie">电影</router-link>
+                    <router-link to="/news">新闻</router-link>
+            </ul>
+            <router-view></router-view>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var Music = {
+            template :
+                `<div>
+                    <router-link to="/music/pop">流行音乐</router-link><br>
+                    <router-link to="/music/nat">民族音乐</router-link><br>
+                    <router-link to="/music/cla">古典音乐</router-link><br>
+                    <router-view></router-view>
+                </div>`
+        }
+        var Movie = {
+            template :
+                `<div>
+                    <router-link to="/movie/love">爱情电影</router-link><br>
+                    <router-link to="/movie/comedy">喜剧电影</router-link><br>
+                    <router-link to="/movie/action">动作电影</router-link><br>
+                    <router-view></router-view>
+                </div>`
+        }
+        var News = {
+            template :
+                `<div>
+                    <router-link to="/news/social">社会新闻</router-link><br>
+                    <router-link to="/news/sport">体育新闻</router-link><br>
+                    <router-link to="/news/ent">娱乐新闻</router-link><br>
+                    <router-view></router-view>
+                </div>`
+        }
+        var Popular = {
+            template : '<div>流行音乐内容</div>'
+        }
+        var National = {
+            template : '<div>民族音乐内容</div>'
+        }
+        var Classical = {
+            template : '<div>古典音乐内容</div>'
+        }
+        var Love = {
+            template : '<div>爱情电影内容</div>'
+        }
+        var Comedy = {
+            template : '<div>喜剧电影内容</div>'
+        }
+        var Action = {
+            template : '<div>动作电影内容</div>'
+        }
+        var Ent = {
+            template : '<div>娱乐新闻内容</div>'
+        }
+        var Sport = {
+            template : '<div>体育新闻内容</div>'
+        }
+        var Social = {
+            template : '<div>社会新闻内容</div>'
+        }
+        var routes = [
+            {
+                path: '/music',
+                component: Music,
+                children:[
+                    {	//默认路由
+                        path:"",
+                        component:Popular
+                    },
+                    {
+                        path:"pop",
+                        component:Popular
+                    },
+                    {
+                        path:"nat",
+                        component:National
+                    },
+                    {
+                        path:"cla",
+                        component:Classical
+                    }
+                ]
+            },
+            {
+                path: '/movie',
+                component: Movie,
+                children:[
+                    {	//默认路由
+                        path:"",
+                        component:Love
+                    },
+                    {
+                        path:"love",
+                        component:Love
+                    },
+                    {
+                        path:"comedy",
+                        component:Comedy
+                    },
+                    {
+                        path:"action",
+                        component:Action
+                    }
+                ]
+            },
+            {
+                path: '/news',
+                component: News,
+                children:[
+                    {	//默认路由
+                        path:"",
+                        component:Sport
+                    },
+                    {
+                        path:"ent",
+                        component:Ent
+                    },
+                    {
+                        path:"sport",
+                        component:Sport
+                    },
+                    {
+                        path:"social",
+                        component:Social
+                    }
+                ]
+            },
+            {	//没有找到路由进行重定向
+                path: "*",
+                redirect: '/music'
+            }
+        ]
+        var router = new VueRouter({
+            routes
+        })
+        var app = new Vue({
+            el: '#example',
+            data: {
+                current : 'music'
+            },
+            router
+        });
+    </script>
+</body>
+</html>

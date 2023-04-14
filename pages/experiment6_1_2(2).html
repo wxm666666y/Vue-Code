@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<title>应用路由实现内容切换</title>
+<script src="../JS/vue.js"></script>
+<script src="../JS/vue-router.js"></script>
+
+</head>
+<body>
+<style type="text/css">
+*{
+	margin:0;
+	padding:0;
+	overflow:hidden;
+}
+body{
+	font-family:微软雅黑
+}
+.box{
+	width:306px;
+	margin:10px auto
+}
+.box a,.sub a{
+	text-decoration:none
+}
+ul{
+	list-style:none
+}
+ul.mainmenu li{
+	float:left;
+}
+ul.mainmenu li a{
+display:block;
+	background:#fefefe;
+	background:-webkit-gradient(linear,left top,left bottom, from(#ffffff), to(#eeeeee));
+	border:1px solid #ccc;
+	padding:5px 0;
+	width:100px;
+	text-align:center;
+	cursor:pointer;
+	color:#9966FF;
+}
+.submenu{ width:100px;
+	height:80px;
+	border-right:1px solid #999999
+}
+.submenu ul{
+	width:80px;
+	margin:0 auto;
+}
+.submenu li{
+	width:80px;
+	height:26px;
+	line-height:26px;
+	cursor:pointer;
+	font-size:14px;
+	text-align:center
+}
+.submenu li:hover{
+background:#EEEEEE
+}
+.sub div{
+	float:left;
+	display:inline-block;
+	font-size:14px
+}
+.sub div{
+	margin-right:10px;
+}
+.music .music a,.videos .videos a,.news .news a{
+	border-bottom:none;
+	background:#fff;
+}
+.first .first,.second .second,.third .third{
+	background:#DDEEFF
+}
+.box>div{
+	clear:both;
+	border:1px solid #ccc;
+	border-top:none;
+	width:304px;
+	height:100px;
+	padding-top:20px;
+	text-align:center;
+	font-size:14px; 
+	margin-top:-1px;
+}
+</style>
+<div id="example">
+  	<div class="box">
+		<ul class="mainmenu" :class="current">
+			<li class="music" v-on:click="current='music'">
+				<router-link to="/music">音乐</router-link>
+			</li>
+			<li class="videos" v-on:click="current='videos'">
+				<router-link to="/movie">电影</router-link>
+			</li>
+			<li class="news" v-on:click="current='news'">
+				<router-link to="/news">新闻</router-link>
+			</li>
+		</ul>
+		<router-view></router-view>
+  	</div>
+</div>
+<template id="music">
+	<div class="sub">
+		<div class="submenu">
+			<ul :class="subcur">
+				<li class="first" v-on:click="subcur='first'">
+					<router-link to="/music/pop">流行音乐</router-link>
+				</li>
+				<li class="second" v-on:click="subcur='second'">
+					<router-link to="/music/nat">民族音乐</router-link>
+				</li>
+				<li class="third" v-on:click="subcur='third'">
+					<router-link to="/music/cla">古典音乐</router-link>
+				</li>
+			</ul>
+		</div>
+		<router-view></router-view>
+	</div>
+</template>
+<template id="movie">
+	<div class="sub">
+		<div class="submenu">
+			<ul :class="subcur">
+				<li class="first" v-on:click="subcur='first'">
+					<router-link to="/movie/love">爱情电影</router-link>
+				</li>
+				<li class="second" v-on:click="subcur='second'">
+					<router-link to="/movie/comedy">喜剧电影</router-link>
+				</li>
+				<li class="third" v-on:click="subcur='third'">
+					<router-link to="/movie/action">动作电影</router-link>
+				</li>
+			</ul>
+		</div>
+		<router-view></router-view>
+	</div>
+</template>
+<template id="news">
+	<div class="sub">
+		<div class="submenu">
+			<ul :class="subcur">
+				<li class="first" v-on:click="subcur='first'">
+					<router-link to="/news/ent">娱乐新闻</router-link>
+				</li>
+				<li class="second" v-on:click="subcur='second'">
+					<router-link to="/news/sport">体育新闻</router-link>
+				</li>
+				<li class="third" v-on:click="subcur='third'">
+					<router-link to="/news/social">社会新闻</router-link>
+				</li>
+			</ul>
+		</div>
+		<router-view></router-view>
+	</div>
+</template>
+<script type="text/javascript">
+var Music = {
+  	data : function(){
+		return {
+			subcur : 'first'//选择子栏目的类名
+		}
+	},
+	template : '#music'//组件的模板
+}
+var Movie = {
+  	data : function(){
+		return {
+			subcur : 'first'//选择子栏目的类名
+		}
+	},
+	template : '#movie'//组件的模板
+}
+var News = {
+  	data : function(){
+		return {
+			subcur : 'first'//选择子栏目的类名
+		}
+	},
+	template : '#news'//组件的模板
+}
+var Popular = {
+	template : '<div>流行音乐内容</div>'
+}
+var National = {
+	template : '<div>民族音乐内容</div>'
+}
+var Classical = {
+	template : '<div>古典音乐内容</div>'
+}
+var Love = {
+	template : '<div>爱情电影内容</div>'
+}
+var Comedy = {
+	template : '<div>喜剧电影内容</div>'
+}
+var Action = {
+	template : '<div>动作电影内容</div>'
+}
+var Ent = {
+	template : '<div>娱乐新闻内容</div>'
+}
+var Sport = {
+	template : '<div>体育新闻内容</div>'
+}
+var Social = {
+	template : '<div>社会新闻内容</div>'
+}
+var routes = [
+    { 
+		path: '/music', 
+		component: Music,
+		children:[
+            {	//默认路由
+                path:"",
+                component:Popular
+            },
+			{
+                path:"pop",
+                component:Popular
+            },
+            {
+                path:"nat",
+                component:National
+            },
+            {
+                path:"cla",
+                component:Classical
+            }
+        ]
+	},
+	{ 
+		path: '/movie', 
+		component: Movie,
+		children:[
+            {	//默认路由
+                path:"",
+                component:Love
+            },
+			{
+                path:"love",
+                component:Love
+            },
+            {
+                path:"comedy",
+                component:Comedy
+            },
+            {
+                path:"action",
+                component:Action
+            }
+        ]
+	},
+	{ 
+		path: '/news', 
+		component: News,
+		children:[
+            {	//默认路由
+                path:"",
+                component:Ent
+            },
+			{
+                path:"ent",
+                component:Ent
+            },
+            {
+                path:"sport",
+                component:Sport
+            },
+            {
+                path:"social",
+                component:Social
+            }
+        ]
+	},
+    {	//没有找到路由进行重定向
+        path: "*",
+        redirect: '/music'
+    }
+]
+var router = new VueRouter({
+  	routes
+})
+var app = new Vue({
+	el: '#example',
+	data: {
+		current : 'music'
+	},
+  	router
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

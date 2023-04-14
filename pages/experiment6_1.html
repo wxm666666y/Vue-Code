@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>购物情况</title>
+    <script src="../js/vue.js"></script>
+    <script src="../js/vue-router.js"></script>
+</head>
+<body>
+    <div id="example">
+        <div class="nav">
+            <button>
+                <router-link to="/PendingPayment">待付款</router-link>
+            </button>
+            <button>
+                <router-link to="/Consignment">代发货</router-link>
+            </button>
+            <button>
+                <router-link to="/GoodsToBeReceived">代收货</router-link>
+            </button>
+        </div>
+        <div class="content">
+            <router-view></router-view>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var PendingPayment = {//定义PendingPayment组件
+            template :
+                `<div>
+                    待付款
+                </div>`
+        }
+        var Consignment = {//定义Consignment组件
+            template :
+                `<div>
+                   代发货
+                 </div>`
+        }
+        var GoodsToBeReceived = {//定义GoodsToBeReceived组件
+            template :
+                `<div>
+                    待收货
+                </div>`
+        }
+        var routes = [
+            {	//默认渲染PendingPayment组件
+                path: '',
+                component: PendingPayment,
+            },
+            {
+                path: '/PendingPayment',
+                component: PendingPayment,
+            },
+            {
+                path: '/Consignment',
+                component: Consignment,
+            },
+            {
+                path: '/GoodsToBeReceived',
+                component: GoodsToBeReceived,
+            }
+        ]
+        var router = new VueRouter({
+            routes
+        })
+        var app = new Vue({
+            el: '#example',
+            router
+        });
+    </script>
+</body>
+</html>
