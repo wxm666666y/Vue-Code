@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="box">
+        <span class="title">电影排行</span>
+        <ul class="tabs" :class ="current">
+            <button class="hot" v-on:click="current='hot'">热门</button>
+            <button class="classic" v-on:click="current='classic'">经典</button>
+        </ul>
+
+        <component :is="current" :classicmovie="classicmovie" :hotmovie="hotmovie" v-on:deleteHot="deleteHotMovie" @delete-class="deleteClassicMovie"></component>
+    </div>
+
+    <script type="text/javascript">
+        var vue = new Vue({
+            el:'#box',
+            data:{
+                current : 'hot',
+                hotmovie : [//热播电影数组
+                    { name : '终结者5', star : '阿诺德.施瓦辛格' },
+                    { name : '飓风营救', star : '连姆.尼森' },
+                    { name : '我是传奇', star : '威尔.史密斯' },
+                    { name : '一线声机', star : '杰森.斯坦森' },
+                    { name : '罗马假日', star : '格里高利.派克' },
+                    { name : '史密斯夫妇', star : '布拉德.皮特' },
+                    { name : '午夜邂逅', star : '克里斯.埃文斯' }
+                ],
+                classicmovie : [//经典电影数组
+                    { name : '机械师2：复活', star : '杰森.斯坦森' },
+                    { name : '变形金刚', star : '希亚.拉博夫' },
+                    { name : '暮光之城', star : '克里斯汀.斯图尔特' },
+                    { name : '怦然心动', star : '玛德琳.卡罗尔' },
+                    { name : '电话情缘', star : '杰西.麦特卡尔菲' },
+                    { name : '超凡蜘蛛侠', star : '安德鲁.加菲尔德' },
+                    { name : '雷神', star : '克里斯.海姆斯沃斯' }
+                ]
+            },
+
+            methods:{
+                deleteHotMovie:function (index) {
+                    this.hotmovie.splice(index,1);
+                },
+                deleteClassicMovie:function (index) {
+                    this.classicmovie.splice(index,1);
+                }
+            },
+
+            components :{
+                'hot' : {
+                    props : ['hotmovie'],//传递Prop
+                    template :
+                        `<div class="main">
+                                <div v-for="(item,index) in hotmovie">
+                                    <span>{{index+1}}</span>
+                                    <span>{{item.name}}</span>
+                                    <span>{{item.star}}</span>
+                                    <span><button @click="deleteHotMovie(index)">删除</button></span>
+                                </div>
+                             </div>`,
+                    methods: {
+                        deleteHotMovie(value) {
+                            this.$emit('deletehot',value);
+                        },
+                    }
+                },
+                'classic' : {
+                    props : ['classicmovie'],//传递Prop
+                    template :
+                        `<div class="main">
+                                <div v-for="(item,index) in classicmovie">
+                                    <span>{{index+1}}</span>
+                                    <span>{{item.name}}</span>
+                                    <span>{{item.star}}</span>
+                                    <button @click="deleteClassicMovie(index)">删除</button>
+                                </div>
+                             </div>`,
+                    methods: {
+                        deleteClassicMovie:function (index) {
+                            this.$emit("delete-class",index);
+                        }
+                    }
+                },
+            }
+
+        })
+    </script>
+</body>
+</html>
